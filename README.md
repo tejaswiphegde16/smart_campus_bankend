@@ -38,13 +38,11 @@ All modules are integrated into a **single Python file** with a menu-driven dash
 - **CSV & OS modules** – file and directory management
 
 ##Steps to run it:
--git clone https://github.com/your-username/smart-campus-information-system.git
--navigate to cd smart-campus-information-system
--Run app.py
+- git clone https://github.com/your-username/smart-campus-information-system.git
+- navigate to file 
+- Run app.py
 
 
 ---
 
-👉 You can copy this **README.md** directly into your GitHub repository. It will give visitors a clear overview of your project, its features, and how to run it.  
-
-Would you like me to also design a **GitHub project banner (ASCII art or text logo)** for the README so it looks more eye-catching?
+👉 You can copy this **README.md** directly into your GitHub repository. It will give visitors a clear overview of your project, its features, and how to run it. 
