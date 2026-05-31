@@ -38,7 +38,6 @@ def save_student(student):
 
 def register_student():
     print("\n=== Student Registration ===")
-
     while True:
         try:
             sid = int(input("Enter Student ID: "))
@@ -88,12 +87,10 @@ def course_enrollment():
         course = input("Enter Course Name (or done): ")
         if course.lower() == "done":
             break
-
         credits = input("Enter Credits: ")
         if not credits.isdigit() or int(credits) <= 0:
             print("Invalid credits.")
             continue
-
         courses.append((course, int(credits)))
 
     print("\nCourses:")
@@ -104,7 +101,6 @@ def student_records():
     if not students:
         print("No Student Records Available")
         return
-
     for s in students:
         print("-" * 25)
         print("ID:", s["id"])
@@ -117,10 +113,8 @@ def search_sort():
     if not student_ids:
         print("No IDs Available")
         return
-
     ids = sorted(student_ids)
     print("Sorted IDs:", ids)
-
     try:
         target = int(input("Enter ID to Search: "))
         if target in ids:
@@ -154,15 +148,12 @@ def directory_scan():
     try:
         if not os.path.exists(path):
             raise FileNotFoundError
-
         for root, dirs, files in os.walk(path):
             print(root)
             for f in files:
                 print("  ", f)
-
             if not dirs and not files:
                 raise MissingFolderError("Empty Folder Found")
-
     except FileNotFoundError:
         print("Invalid Directory Path")
     except MissingFolderError as e:
@@ -170,7 +161,6 @@ def directory_scan():
 
 def performance_analytics():
     try:
-        # Load student data from CSV
         df = pd.read_csv("students.csv")
 
         print("\n--- Raw Data ---")
@@ -179,7 +169,6 @@ def performance_analytics():
         print("\n--- Statistical Summary ---")
         print(df["Score"].describe())
 
-        # NumPy analysis
         scores = df["Score"].to_numpy()
         mean_score = np.mean(scores)
         median_score = np.median(scores)
@@ -190,7 +179,6 @@ def performance_analytics():
         print("Median Score:", round(median_score, 2))
         print("Standard Deviation:", round(std_dev, 2))
 
-        # Highest performers
         max_score = np.max(scores)
         toppers = df[df["Score"] == max_score]
 
@@ -199,7 +187,15 @@ def performance_analytics():
             print(f"ID: {row['ID']}, Name: {row['Name']}, "
                   f"Score: {row['Score']}, Grade: {row['Grade']}, Remark: {row['Remark']}")
 
-        # Plot average score bar chart
+        
+        top_n = df.nlargest(3, "Score")
+        print("\n--- Top 3 Performers ---")
+        print(top_n[["ID", "Name", "Score", "Grade", "Remark"]])
+
+    
+        print("\n--- Grade Distribution ---")
+        print(df["Grade"].value_counts())
+
         plt.bar(["Mean", "Median"], [mean_score, median_score], color=["blue", "green"])
         plt.title("Overall Performance (Mean vs Median)")
         plt.ylabel("Score")
@@ -208,11 +204,8 @@ def performance_analytics():
     except FileNotFoundError:
         print("students.csv not found. Please register students first.")
 
-
-
 def main():
     load_students()
-
     while True:
         print("\n===== SMART CAMPUS INFORMATION SYSTEM =====")
         print("1. Student Registration")
@@ -222,7 +215,7 @@ def main():
         print("5. Fee Calculation")
         print("6. File Handling")
         print("7. Directory Scan")
-        print("8. Performance Analytics")
+        print("8. Performance Analytics (NumPy + Pandas + Charts)")
         print("9. Exit")
 
         choice = input("Enter Choice: ")
