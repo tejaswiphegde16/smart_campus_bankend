@@ -1,3 +1,0 @@
-ID,Name,Marks
-101,Rahul,89
-102,Priya,95
