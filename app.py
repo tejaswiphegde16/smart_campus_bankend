@@ -215,7 +215,7 @@ def main():
         print("5. Fee Calculation")
         print("6. File Handling")
         print("7. Directory Scan")
-        print("8. Performance Analytics (NumPy + Pandas + Charts)")
+        print("8. Performance Analytics")
         print("9. Exit")
 
         choice = input("Enter Choice: ")
