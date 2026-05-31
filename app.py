@@ -38,9 +38,13 @@ def save_student(student):
 
 def register_student():
     print("\n=== Student Registration ===")
+
     while True:
         try:
             sid = int(input("Enter Student ID: "))
+            if sid in student_ids:
+                print(f"Error: Student ID {sid} is already registered for another student!")
+                return  
             break
         except ValueError:
             print("Student ID must be a number!")
@@ -80,6 +84,7 @@ def register_student():
     save_student(student)
 
     print("Student Registered Successfully!")
+
 
 def course_enrollment():
     courses = []
