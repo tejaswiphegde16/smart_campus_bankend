@@ -1,4 +1,3 @@
-
 import os
 import csv
 import numpy as np
@@ -170,57 +169,85 @@ def directory_scan():
         print(e)
 
 def performance_analytics():
-    data = {
-        "Name": ["Rahul", "Priya", "Anita"],
-        "Math": [80, 90, 95],
-        "Science": [85, 88, 92],
-        "English": [75, 91, 89]
-    }
+    try:
+        # Load student data from CSV
+        df = pd.read_csv("students.csv")
 
-    df = pd.DataFrame(data)
-    print(df)
-    print(df.describe())
+        print("\n--- Raw Data ---")
+        print(df)
 
-    scores = df[["Math", "Science", "English"]].to_numpy()
-    means = np.mean(scores, axis=0)
+        print("\n--- Statistical Summary ---")
+        print(df["Score"].describe())
 
-    plt.bar(["Math", "Science", "English"], means)
-    plt.title("Average Scores")
-    plt.show()
+        # NumPy analysis
+        scores = df["Score"].to_numpy()
+        mean_score = np.mean(scores)
+        median_score = np.median(scores)
+        std_dev = np.std(scores)
 
-load_students()
+        print("\n--- NumPy Analysis ---")
+        print("Mean Score:", round(mean_score, 2))
+        print("Median Score:", round(median_score, 2))
+        print("Standard Deviation:", round(std_dev, 2))
 
-while True:
-    print("\n===== SMART CAMPUS INFORMATION SYSTEM =====")
-    print("1. Student Registration")
-    print("2. Course Enrollment")
-    print("3. Student Records")
-    print("4. Search and Sort Student IDs")
-    print("5. Fee Calculation")
-    print("6. File Handling")
-    print("7. Directory Scan")
-    print("8. Performance Analytics")
-    print("9. Exit")
+        # Highest performers
+        max_score = np.max(scores)
+        toppers = df[df["Score"] == max_score]
 
-    choice = input("Enter Choice: ")
+        print("\n--- Highest Performers ---")
+        for _, row in toppers.iterrows():
+            print(f"ID: {row['ID']}, Name: {row['Name']}, "
+                  f"Score: {row['Score']}, Grade: {row['Grade']}, Remark: {row['Remark']}")
 
-    if choice == "1":
-        register_student()
-    elif choice == "2":
-        course_enrollment()
-    elif choice == "3":
-        student_records()
-    elif choice == "4":
-        search_sort()
-    elif choice == "5":
-        calculate_fee()
-    elif choice == "6":
-        file_handling()
-    elif choice == "7":
-        directory_scan()
-    elif choice == "8":
-        performance_analytics()
-    elif choice == "9":
-        break
-    else:
-        print("Invalid Choice")
+        # Plot average score bar chart
+        plt.bar(["Mean", "Median"], [mean_score, median_score], color=["blue", "green"])
+        plt.title("Overall Performance (Mean vs Median)")
+        plt.ylabel("Score")
+        plt.show()
+
+    except FileNotFoundError:
+        print("students.csv not found. Please register students first.")
+
+
+
+def main():
+    load_students()
+
+    while True:
+        print("\n===== SMART CAMPUS INFORMATION SYSTEM =====")
+        print("1. Student Registration")
+        print("2. Course Enrollment")
+        print("3. Student Records")
+        print("4. Search and Sort Student IDs")
+        print("5. Fee Calculation")
+        print("6. File Handling")
+        print("7. Directory Scan")
+        print("8. Performance Analytics")
+        print("9. Exit")
+
+        choice = input("Enter Choice: ")
+
+        if choice == "1":
+            register_student()
+        elif choice == "2":
+            course_enrollment()
+        elif choice == "3":
+            student_records()
+        elif choice == "4":
+            search_sort()
+        elif choice == "5":
+            calculate_fee()
+        elif choice == "6":
+            file_handling()
+        elif choice == "7":
+            directory_scan()
+        elif choice == "8":
+            performance_analytics()
+        elif choice == "9":
+            print("Exiting... Goodbye!")
+            break
+        else:
+            print("Invalid Choice")
+
+if __name__ == "__main__":
+    main()
